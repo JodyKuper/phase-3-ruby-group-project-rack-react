@@ -26,7 +26,6 @@ class Application
         return [200, {'Content-Type' => 'application/json'}, [new_restaurant.to_json]] 
       
       elsif req.env["REQUEST_METHOD"] == "DELETE"
-      #  binding.pry
 
         id = req.path.split("/restaurants/").last
         Restaurant.find(id).delete
@@ -52,7 +51,7 @@ class Application
         #  binding.pry
           id = req.path.split("/usernames/").last
           Username.find(id).delete
-          return[200, { 'Content-Type' => 'application/json'}, [{:message => "Username deleted"}.to_json]]  
+          return[200, { 'Content-Type' => 'application/json'}, [{:message => "Username deleted"}.to_json]]      
       end  
 
     elsif req.path.match(/reviews/)
