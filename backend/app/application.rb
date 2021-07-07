@@ -22,10 +22,11 @@ class Application
         end
       elsif req.env["REQUEST_METHOD"] == "POST"
         form_data = JSON.parse(req.body.read) 
-        new_restaurant = Restaurant.create(name: form_data["name"])
+        new_restaurant = Restaurant.create(name: form_data["restaurant"])
         return [200, {'Content-Type' => 'application/json'}, [new_restaurant.to_json]] 
       
       elsif req.env["REQUEST_METHOD"] == "DELETE"
+     
 
         id = req.path.split("/restaurants/").last
         Restaurant.find(id).delete
@@ -65,8 +66,10 @@ class Application
           return [200, {'Content-Type' => 'application/json'}, [found_review.to_json]] 
         end
       elsif req.env["REQUEST_METHOD"] == "POST"
-        form_data = JSON.parse(req.body.read) 
-        new_review = Review.create(text: form_data["text"])
+        form_data = JSON.parse(req.body.read)
+        binding.pry
+        
+        new_review = Review.create(text: form_data["review"], name: form_data["name"], restaurant_id: form_data["restaurant"])
         return [200, {'Content-Type' => 'application/json'}, [new_review.to_json]]
       elsif req.env["REQUEST_METHOD"] == "DELETE"
         #  binding.pry

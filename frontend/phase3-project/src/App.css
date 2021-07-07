@@ -4,5 +4,10 @@ body {
   font-size: 25PX;
 }
 
-
+li {
+  list-style-type: none;
+  
+  ;
+  
+}
 
