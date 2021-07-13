@@ -1,71 +1,89 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, NavLink} from "react-router-dom"
 
 export default class IndexPage extends Component {
 	state = {
 		
 		restaurants: [],
 		userName: [],
-		reviews: []
+		reviews: [],
+		
+
+
 		
 	}
 
 	fetchRestaurants = () => {
-		fetch("http://localhost:9393/restaurants")
+		fetch("http://localhost:9393/restaurants/")
 		  .then((res) => res.json())
 		  .then((data) => {
-		    console.log(data.map(restaurants=>restaurants.name))
+		//     console.log(data.map(restaurants=>restaurants.name))
 		    this.setState({
 		      restaurants: data
 		    });
 		  });
 	      };
-  
-
-	      fetchUserName = () => {
-		fetch("http://localhost:9393/usernames")
-		  .then((res) => res.json())
-		  .then((data) => {
-		    console.log(data.map(username=>username.name))
-		    this.setState({
-		      userName: data
-		    });
-		  });
-	      };
-
+	     
+	      
 	      fetchReviews = () => {
-		fetch("http://localhost:9393/reviews")
-		  .then((res) => res.json())
-		  .then((data) => {
-		    console.log(data.map(reviews=>reviews.text))
-		    this.setState({
-		      reviews: data
-		    });
-		  });
-	      };
+		      fetch("http://localhost:9393/reviews")
+		      .then((res) => res.json())
+		      .then((data) => {
+			      // debugger     
+			      this.setState({
+				      reviews: data
+				});
+			});
+		};
+		
+		fetchUserName = (id) => {
+			fetch("http://localhost:9393/usernames"   )
+			.then((res) => res.json())
+			.then((data) => {
+				this.setState({
+					userName: data
+				});
+			});
+		};
+		
+		componentDidMount() {
+		  this.fetchReviews()
+		  this.fetchRestaurants()
+		  this.fetchUserName()
+		}
+    
   
-	      componentDidMount() {
-		this.fetchRestaurants()
-		this.fetchUserName()
-		this.fetchReviews()
-	      }
 
 	      RestaurantList=()=>{     
-		const list=this.state.restaurants.map((name)=>{
-		    return  <li>{name.name}<br></br></li>
+		const list=this.state.reviews.map((review)=>{
+			console.log(review.username_id)	
+		    return  <li>{review.text}<br></br></li>
 		})
-		
 		      return <ul>{list}</ul>
 		}
-	 
 
-
+		  
+		reviewDelete  = () => {
+			fetch("http://localhost:9393/reviews/"+this.state.reviews[0].id, {
+			method: "DELETE",
+			headers: {
+		       'Content-Type': 'application/json',
+			 } 
+		       })
+		       .then((res)=>res.json())
+		       .then(data=>console.log(data)
+		       )   
+			       
+	       }	
 
 
 	render() {
-		console.log(this.state)
+			
 		return (
 			<div>
+				<NavLink to="/">HOME</NavLink><br></br>
+				<br></br>
+				<button name="deleteUser" onClick={this.reviewDelete}>Delete</button><br></br>
 				{this.RestaurantList()}	
 
 			</div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
 
-export default class Username extends Component {
+export default class Home extends Component {
 	state={
 		name:"",
 		restaurant: "",
@@ -31,7 +32,7 @@ export default class Username extends Component {
 		    return response.json();
 		  })
 		  .then((object)=> {
-		    console.log(object)
+		//     console.log(object)
 		    this.setState({
 		    newUser: object
 		    })
@@ -74,7 +75,7 @@ export default class Username extends Component {
 		    return response.json();
 		  })
 		  .then((object)=> {
-		    console.log(object)
+		//     console.log(object)
 		    this.setState({
 		    newRestaurant: object
 		    })
@@ -104,7 +105,7 @@ export default class Username extends Component {
 			    return response.json();
 			  })
 			  .then((object)=> {
-			    console.log(object)
+			//     console.log(object)
 			    this.setState({
 			    newReview: object
 			    })
@@ -133,6 +134,8 @@ export default class Username extends Component {
 				<input type='Submit'></input>
 				
 			</form>	
+			<br></br>
+			<NavLink to='/indexpage'>REVIEWS</NavLink>
 
 					
 			</div>

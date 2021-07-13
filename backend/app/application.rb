@@ -67,9 +67,8 @@ class Application
         end
       elsif req.env["REQUEST_METHOD"] == "POST"
         form_data = JSON.parse(req.body.read)
-        binding.pry
-        
-        new_review = Review.create(text: form_data["review"], name: form_data["name"], restaurant_id: form_data["restaurant"])
+        # binding.pry
+        new_review = Review.create(text: form_data["review"], username_id: form_data["newUser"]["id"], restaurant_id: form_data["newRestaurant"]["id"])
         return [200, {'Content-Type' => 'application/json'}, [new_review.to_json]]
       elsif req.env["REQUEST_METHOD"] == "DELETE"
         #  binding.pry
